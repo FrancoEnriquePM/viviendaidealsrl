@@ -1,0 +1,55 @@
+<% layout('layout') %>
+
+<h2 class="mt-4">Reporte de Contratos</h2>
+
+<form method="GET" action="/reporte/contratos" class="row g-3">
+  <div class="col-md-4">
+    <label for="estado" class="form-label">Estado del contrato</label>
+    <select class="form-select" name="estado">
+      <option value="">Todos</option>
+      <option value="activo">Activo</option>
+      <option value="vencido">Vencido</option>
+      <option value="cancelado">Cancelado</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label for="cliente" class="form-label">Cliente</label>
+    <input
+      class="form-control"
+      name="cliente"
+      placeholder="Nombre del cliente"
+    />
+  </div>
+  <div class="col-md-4 align-self-end">
+    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+  </div>
+</form>
+
+<hr class="my-4" />
+
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Tipo</th>
+      <th>Inicio</th>
+      <th>Fin</th>
+      <th>Estado</th>
+      <th>Cliente</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% contratos.forEach(c => { %>
+    <tr>
+      <td><%= c.id %></td>
+      <td><%= c.tipo_contrato %></td>
+      <td><%= c.fecha_inicio.toISOString().split('T')[0] %></td>
+      <td>
+        <%= c.fecha_fin ? c.fecha_fin.toISOString().split('T')[0] : '—' %>
+      </td>
+      <td><%= c.estado_contrato %></td>
+      <td><%= c.cliente %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

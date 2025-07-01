@@ -1,0 +1,50 @@
+<% layout('layout') %>
+
+<h2 class="mt-4">Ingresos Mensuales</h2>
+
+<form method="GET" action="/reporte/ingresos" class="row g-3">
+  <div class="col-md-4">
+    <label for="anio" class="form-label">Año</label>
+    <input
+      class="form-control"
+      type="number"
+      name="anio"
+      placeholder="Ej: 2025"
+    />
+  </div>
+  <div class="col-md-4">
+    <label for="tipo" class="form-label">Tipo de operación</label>
+    <select class="form-select" name="tipo">
+      <option value="">Todos</option>
+      <option value="alquiler">Alquiler</option>
+      <option value="venta">Venta</option>
+    </select>
+  </div>
+  <div class="col-md-4 align-self-end">
+    <button type="submit" class="btn btn-info w-100">Filtrar</button>
+  </div>
+</form>
+
+<hr class="my-4" />
+
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>Tipo de operación</th>
+      <th>Mes</th>
+      <th>Total Ingresado (Bs)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ingresos.forEach(i => { %>
+    <tr>
+      <td><%= i.tipo_operacion %></td>
+      <td>
+        <%= new Date(i.anio, i.mes - 1).toLocaleString('es-BO', { month: 'long',
+        year: 'numeric' }) %>
+      </td>
+      <td>Bs. <%= i.total.toFixed(2) %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
